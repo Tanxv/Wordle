@@ -1,0 +1,75 @@
+console.log("hello");
+//Parametros
+let lista = ["APPLE","MOUSE","HOUSE","CLASS","ANGEL","MONEY","GOSHT"];
+let indiceRandom = Math.floor(Math.random()*lista.length);
+let palabra = "APPLE";
+let intentos = 6;
+const button = document.getElementById("guess-button");
+button.addEventListener("click", intentar);
+
+/**
+ * Funcion Principal del Script, permite jugar a adivinar 
+ * @returns 
+ */
+function intentar(){
+    console.log("Intento!")
+    const INTENTO = leerIntento();
+    if (INTENTO === palabra ) {
+        console.log("GANASTE!")
+        return
+    }
+    const GRID = document.getElementById("grid");
+    const ROW = document.createElement('div');
+    ROW.className = 'row';
+    for (let i in palabra){
+        const SPAN = document.createElement('span');
+        SPAN.className = 'letter';
+        if (INTENTO[i]===palabra[i]){
+            console.log(INTENTO[i], "VERDE");
+            SPAN.innerHTML = INTENTO[i];
+            SPAN.style.backgroundColor = 'green';
+        } 
+        else if( palabra.includes(INTENTO[i]) ) {
+            console.log(INTENTO[i], "AMARILLO");
+            SPAN.innerHTML = INTENTO[i];
+            SPAN.style.backgroundColor = 'yellow';
+        } 
+        else {
+            console.log(INTENTO[i], "GRIS");
+            SPAN.innerHTML = INTENTO[i];
+            SPAN.style.backgroundColor = 'grey';
+        }
+        ROW.appendChild(SPAN)
+    }
+    GRID.appendChild(ROW)   
+		intentos--
+    if(intentos==0){
+      terminar("<h1>PERDISTE!😖</h1>")
+    }
+    if (INTENTO === palabra ) {
+        terminar("<h1>GANASTE!😀</h1>")
+        return
+    }
+
+}
+/**
+ * Funcion que imprime cada intento por consola
+ * @returns 
+ */
+function leerIntento(){
+    let intento = document.getElementById("guess-input");
+    intento = intento.value;
+    intento = intento.toUpperCase(); 
+    return intento;
+}
+/**
+ * Funcion para dejar un mensaje al terminar la partida
+ * @param {*} mensaje 
+ */
+function terminar(mensaje){
+    const INPUT = document.getElementById("guess-input");
+    INPUT.disabled = true;
+    button.disabled = true;
+    let contenedor = document.getElementById('guesses');
+    contenedor.innerHTML = mensaje;
+}
