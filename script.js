@@ -2,7 +2,7 @@ console.log("hello");
 //Parametros
 let lista = ["APPLE","MOUSE","HOUSE","CLASS","ANGEL","MONEY","GOSHT"];
 let indiceRandom = Math.floor(Math.random()*lista.length);
-let palabra = "APPLE";
+let palabra = lista[indiceRandom];
 let intentos = 6;
 const button = document.getElementById("guess-button");
 button.addEventListener("click", intentar);
@@ -14,10 +14,7 @@ button.addEventListener("click", intentar);
 function intentar(){
     console.log("Intento!")
     const INTENTO = leerIntento();
-    if (INTENTO === palabra ) {
-        console.log("GANASTE!")
-        return
-    }
+
     const GRID = document.getElementById("grid");
     const ROW = document.createElement('div');
     ROW.className = 'row';
@@ -50,7 +47,7 @@ function intentar(){
         terminar("<h1>GANASTE!😀</h1>")
         return
     }
-
+    
 }
 /**
  * Funcion que imprime cada intento por consola
@@ -71,5 +68,7 @@ function terminar(mensaje){
     INPUT.disabled = true;
     button.disabled = true;
     let contenedor = document.getElementById('guesses');
+    let mensajeElement = document.createElement('div');
     contenedor.innerHTML = mensaje;
+    contenedor.appendChild(mensajeElement);
 }
